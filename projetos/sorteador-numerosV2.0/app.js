@@ -5,13 +5,25 @@ function sortear() {
     let listaNum = [];
     let i = 0;
 
-    while (i < quantidade) {
-        let num_gerado = numeroAleatorio(inicio, fim);
-        listaNum.push(num_gerado);
-        i++;
+    if (inicio > fim) {
+        alert('O inicio deve ser menor que o final.')
+    } else if (quantidade > inicio + fim) {
+        alert('Digite um intervalo maior.')
+    } else {
+        while (i < quantidade) {
+            let num_gerado = numeroAleatorio(inicio, fim);
+            if (!listaNum.includes(num_gerado)) {
+                listaNum.push(num_gerado);
+                i++;
+            }
+        }
+
+        let resultado = document.getElementById("resultado");
+        resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${listaNum}</label>`
+        habilitarReinicio();
     }
 
-    alert(listaNum)
+
 }
 
 
@@ -20,6 +32,22 @@ function numeroAleatorio(inicio, fim) {
     return num
 }
 
-function reiniciar() {
-
+function habilitarReinicio() {
+    let btnreiniciar = document.getElementById('btn-reiniciar');
+    if (btnreiniciar.classList.contains('container__botao-desabilitado')) {
+        btnreiniciar.classList.remove('container__botao-desabilitado');
+        btnreiniciar.classList.add('container__botao');
+    } else {
+        btnreiniciar.classList.remove('container__botao');
+        btnreiniciar.classList.add('container__botao-desabilitado');
+    }
 }
+
+
+function reiniciar() {
+    document.getElementById("quantidade").value = '';
+    document.getElementById("de").value = '';
+    document.getElementById("ate").value = '';
+    document.getElementById("resultado").innerHTML = '<label class="texto__paragrafo">Números sorteados:  nenhum até agora</label>';
+    habilitarReinicio();
+}   
